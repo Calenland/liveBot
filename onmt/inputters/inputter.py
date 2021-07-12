@@ -11,7 +11,7 @@ import torch
 import torchtext.legacy.data
 from torchtext.legacy.data import Field, RawField, LabelField
 from torchtext.vocab import Vocab
-from torchtext.legacy.data.utils import RandomShuffler
+from torchtext.data.utils import RandomShuffler
 
 from onmt.inputters.text_dataset import text_fields, TextMultiField
 from onmt.inputters.image_dataset import image_fields
