@@ -8,10 +8,10 @@ from collections import Counter, defaultdict
 from itertools import chain, cycle
 
 import torch
-import torchtext.data
+import torchtext.legacy.data
 from torchtext.legacy.data import Field, RawField, LabelField
 from torchtext.vocab import Vocab
-from torchtext.data.utils import RandomShuffler
+from torchtext.legacy.data.utils import RandomShuffler
 
 from onmt.inputters.text_dataset import text_fields, TextMultiField
 from onmt.inputters.image_dataset import image_fields
@@ -118,7 +118,7 @@ def get_fields(
     Args:
         src_data_type: type of the source input. Options are [text|img|audio].
         n_src_feats (int): the number of source features (not counting tokens)
-            to create a :class:`torchtext.data.Field` for. (If
+            to create a :class:`torchtext.legacy.data.Field` for. (If
             ``src_data_type=="text"``, these fields are stored together
             as a ``TextMultiField``).
         n_tgt_feats (int): See above.
@@ -249,7 +249,7 @@ def load_old_vocab(vocab, data_type="text", dynamic_dict=False):
 
 
 def _old_style_vocab(vocab):
-    """Detect old-style vocabs (``List[Tuple[str, torchtext.data.Vocab]]``).
+    """Detect old-style vocabs (``List[Tuple[str, torchtext.legacy.data.Vocab]]``).
     Args:
         vocab: some object loaded from a *.vocab.pt file
     Returns:
@@ -299,7 +299,7 @@ def filter_example(ex, use_src_len=True, use_tgt_len=True,
     If used with a dataset as ``filter_pred``, use :func:`partial()`
     for all keyword arguments.
     Args:
-        ex (torchtext.data.Example): An object with a ``src`` and ``tgt``
+        ex (torchtext.legacy.data.Example): An object with a ``src`` and ``tgt``
             property.
         use_src_len (bool): Filter based on the length of ``ex.src``.
         use_tgt_len (bool): Similar to above.
@@ -570,7 +570,7 @@ def _read_vocab_file(vocab_path, tag):
 def batch_iter(data, batch_size, batch_size_fn=None, batch_size_multiple=1):
     """Yield elements from data in chunks of batch_size, where each chunk size
     is a multiple of batch_size_multiple.
-    This is an extended version of torchtext.data.batch.
+    This is an extended version of torchtext.legacy.data.batch.
     """
     if batch_size_fn is None:
         def batch_size_fn(new, count, sofar):
@@ -606,7 +606,7 @@ def batch_iter(data, batch_size, batch_size_fn=None, batch_size_multiple=1):
 
 def _pool(data, batch_size, batch_size_fn, batch_size_multiple,
           sort_key, random_shuffler, pool_factor):
-    for p in torchtext.data.batch(
+    for p in torchtext.legacy.data.batch(
             data, batch_size * pool_factor,
             batch_size_fn=batch_size_fn):
         p_batch = list(batch_iter(
@@ -686,9 +686,9 @@ class OrderedIterator(torchtext.legacy.data.Iterator):
         return torch.stack(X)
     def __iter__(self):
         """
-        Extended version of the definition in torchtext.data.Iterator.
-        Added yield_raw_example behaviour to yield a torchtext.data.Example
-        instead of a torchtext.data.Batch object.
+        Extended version of the definition in torchtext.legacy.data.Iterator.
+        Added yield_raw_example behaviour to yield a torchtext.legacy.data.Example
+        instead of a torchtext.legacy.data.Batch object.
         """
         while True:
             self.init_epoch()
@@ -718,7 +718,7 @@ class OrderedIterator(torchtext.legacy.data.Iterator):
                         visual.append(visual_piece)
                         data.tgt[0]=data.tgt[0][:-1]
                     visual = torch.stack(visual)
-                    batch = torchtext.data.Batch(minibatch,self.dataset,self.device)
+                    batch = torchtext.legacy.data.Batch(minibatch,self.dataset,self.device)
                     batch.src = batch.src + (visual,)
                     yield batch
             if not self.repeat:
@@ -778,7 +778,7 @@ class MultipleDatasetIterator(object):
                     self.random_shuffler,
                     self.pool_factor):
                 minibatch = sorted(minibatch, key=self.sort_key, reverse=True)
-                yield torchtext.data.Batch(minibatch,
+                yield torchtext.legacy.data.Batch(minibatch,
                                            self.iterables[0].dataset,
                                            self.device)
 

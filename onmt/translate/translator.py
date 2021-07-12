@@ -67,7 +67,7 @@ class Translator(object):
 
     Args:
         model (onmt.modules.NMTModel): NMT model to use for translation
-        fields (dict[str, torchtext.data.Field]): A dict
+        fields (dict[str, torchtext.legacy.data.Field]): A dict
             mapping each side to its list of name-Field pairs.
         src_reader (onmt.inputters.DataReaderBase): Source reader.
         tgt_reader (onmt.inputters.TextDataReader): Target reader.
@@ -215,7 +215,7 @@ class Translator(object):
 
         Args:
             model (onmt.modules.NMTModel): See :func:`__init__()`.
-            fields (dict[str, torchtext.data.Field]): See
+            fields (dict[str, torchtext.legacy.data.Field]): See
                 :func:`__init__()`.
             opt (argparse.Namespace): Command line options
             model_opt (argparse.Namespace): Command line options saved with
@@ -630,7 +630,7 @@ class Translator(object):
 
         Args:
             batch: a batch of sentences, yield by data iterator.
-            src_vocabs (list): list of torchtext.data.Vocab if can_copy.
+            src_vocabs (list): list of torchtext.legacy.data.Vocab if can_copy.
             decode_strategy (DecodeStrategy): A decode strategy to use for
                 generate translation step by step.
 
