@@ -618,7 +618,7 @@ def _pool(data, batch_size, batch_size_fn, batch_size_multiple,
             yield b
 
 
-class OrderedIterator(torchtext.data.Iterator):
+class OrderedIterator(torchtext.legacy.data.Iterator):
 
     def __init__(self,
                  dataset,
