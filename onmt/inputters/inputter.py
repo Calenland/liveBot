@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from itertools import chain, cycle
 
 import torch
-import torchtext.legacy.data
+import torchtext.data
 from torchtext.data import Field, RawField, LabelField
 from torchtext.vocab import Vocab
 from torchtext.data.utils import RandomShuffler
