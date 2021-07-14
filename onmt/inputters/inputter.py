@@ -9,7 +9,7 @@ from itertools import chain, cycle
 
 import torch
 import torchtext.legacy.data
-from torchtext.legacy.data import Field, RawField, LabelField
+from torchtext.data import Field, RawField, LabelField
 from torchtext.vocab import Vocab
 from torchtext.data.utils import RandomShuffler
 
